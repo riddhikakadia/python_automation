@@ -16,6 +16,5 @@ steps:
   - script: pip install -r requirements.txt
     displayName: 'Install requirements'
 
-  - bash: |
-    pytest --junitxml=reports/test-results.xml
+  - script: pytest --junitxml=reports/test-results.xml
     displayName: 'Run automated tests'
