@@ -4,17 +4,18 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+  - main
 
 pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - script: echo Hello, world!
+    displayName: 'Run a one-line script'
 
-- script: pip install -r requirements.txt
-  displayName: 'Install requirements'
+  - script: pip install -r requirements.txt
+    displayName: 'Install requirements'
 
-- script: python src/example.py
-  displayName: 'run automated tests'
+  - bash: |
+    pytest --junitxml=reports/test-results.xml
+    displayName: 'Run automated tests'
