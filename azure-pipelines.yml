@@ -19,5 +19,5 @@ steps:
   - script: pip install pytest pytest-azurepipelines
     displayName: 'pytest installation'
 
-  - script: pytest
+  - script: pytest test_suit
     displayName: 'pytest run'
