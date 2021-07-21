@@ -16,8 +16,6 @@ steps:
   - script: pip install -r requirements.txt
     displayName: 'Install requirements'
     
-  - script: pip install pytest pytest-azurepipelines
-    displayName: 'pytest installation'
-
-  - script: pytest test_suit
+  - bash: 'pytest --junitxml=$(Build.StagingDirectory)/report.xml'
+    workingDirectory: 'test_suit'
     displayName: 'pytest run'
