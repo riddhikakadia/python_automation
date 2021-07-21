@@ -3,19 +3,29 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-trigger:
-  - main
+queue:
+  name: Hosted Linux Preview
 
-pool:
-  vmImage: 'ubuntu-latest'
+trigger:
+- main
 
 steps:
-  - script: echo Hello, world!
-    displayName: 'Run a one-line script'
 
-  - script: pip install -r requirements.txt
-    displayName: 'Install requirements'
-    
-  - bash: 'pytest --junitxml=$(Build.StagingDirectory)/report.xml'
-    workingDirectory: 'test_suit'
-    displayName: 'pytest run'
+- task: UsePythonVersion@0
+  displayName: 'Use Python 3.x'
+
+- bash: |
+   pip install pytest 
+   pip install pytest-xdist
+   pip install flaky
+  displayName: 'Install a bunch of pip packages.'
+
+- bash: 'pytest --junitxml=$(Build.StagingDirectory)/report.xml' 
+  workingDirectory: 'test_suit'
+  displayName: 'Run tests'
+
+- task: PublishTestResults@2
+  displayName: 'Publish test result /report.xml'
+  inputs:
+    testResultsFiles: '$(Build.StagingDirectory)/report.xml'
+    testRunTitle: main
