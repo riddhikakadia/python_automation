@@ -7,7 +7,7 @@ trigger:
   - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 steps:
   - script: echo Hello, world!
@@ -16,6 +16,6 @@ steps:
   - script: pip install -r requirements.txt
     displayName: 'Install requirements'
 
-  - bash:
-    pytest --junitxml=reports/test-results.xml
-    displayName: 'Run automated tests'
+  - task: BatchScript@1
+    inputs:
+      filename: run.bat
